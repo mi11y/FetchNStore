@@ -40,7 +40,8 @@ public class Driver {
     /**
      * When this key-value file is executed via "./key-value", java
      * will execute the main() method defined in the first class.
-     * @param args
+     * @param args Command line arguements are ignored when first starting
+     *             the program. Wait for the "> " cursor to appear.
      */
     public static void main(String[] args) {
 
