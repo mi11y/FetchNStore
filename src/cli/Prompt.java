@@ -2,37 +2,53 @@ package cli;
 
 public class Prompt {
 
+    public boolean shouldExit;
+
     public final boolean OK     = true;
     public final boolean ERROR  = false;
+
 
     private final String PROMPT         = "> ";
     private final String COMMAND_EXIT   = "exit";
     private final String COMMAND_PUT    = "put";
     private final String COMMAND_FETCH  = "fetch";
     private final String MSG_ERROR_INVALID = "Invalid syntax.";
+    private final String MSG_ERROR_VALUE = "Value not found.";
     private final String MSG_ERROR_UNKWN = "Unknown command. Known commands are: put, fetch, exit";
     private final String MSG_OK     = "ok";
     private final String MSG_BYE    = "Bye!";
 
-    private String requestedCommand;
     private String arg1;
     private String arg2;
+
     private String currentCommand;
     public String getCurrentCommand() {
         return currentCommand;
     }
-
-    public boolean shouldExit;
 
     private String commandMessage;
     public String getCommandMessage() {
         return commandMessage;
     }
 
+    private AbstractDataStore dataStore;
+
+    public Prompt(AbstractDataStore dataStore) {
+        init();
+        this.dataStore = dataStore;
+    }
+
     public Prompt() {
+        init();
+        this.dataStore = new MapDataStore();
+    }
+
+    private void init() {
         shouldExit = false;
         commandMessage = "";
         currentCommand = "";
+        arg1 = "";
+        arg2 = "";
     }
 
     public String getPROMPT() {
@@ -50,7 +66,31 @@ public class Prompt {
             return ERROR;
         }
 
-        return OK;
+        return handleCommand();
+    }
+
+    private boolean handleCommand() {
+        if(currentCommand.equals(COMMAND_EXIT)) {
+            commandMessage = MSG_BYE;
+            return OK;
+        }
+        else if(currentCommand.equals(COMMAND_PUT)) {
+            commandMessage  = MSG_OK;
+            dataStore.create(arg1, arg2);
+            return OK;
+        }
+        else if(currentCommand.equals(COMMAND_FETCH)) {
+            String readResult   = dataStore.read(arg1);
+            if(readResult.isBlank() == false) {
+                commandMessage      = readResult;
+                return OK;
+            }
+            else {
+                commandMessage = MSG_ERROR_VALUE;
+            }
+        }
+
+        return ERROR;
     }
 
     private String[] cleanUserInput(String userInput) {
@@ -61,6 +101,14 @@ public class Prompt {
                 .split(" ");
     }
 
+    private String getFirstArg(String[] tokens) {
+        return tokens[1];
+    }
+
+    private String getSecondArg(String[] tokens) {
+        return tokens[2];
+    }
+
     private boolean validateCommand(String[] tokens) {
         if(tokens == null || tokens.length == 0) {
             return ERROR;
@@ -68,7 +116,6 @@ public class Prompt {
 
         if(isExitCommand(tokens)) {
             if(hasNoArgs(tokens)) {
-                commandMessage = MSG_BYE;
                 currentCommand = COMMAND_EXIT;
                 shouldExit = true;
                 return OK;
@@ -80,8 +127,9 @@ public class Prompt {
         }
         else if(isPutCommand(tokens)) {
             if(hasTwoArgs(tokens)) {
-                commandMessage = MSG_OK;
-                currentCommand = COMMAND_PUT;
+                arg1            = getFirstArg(tokens);
+                arg2            = getSecondArg(tokens);
+                currentCommand  = COMMAND_PUT;
                 return OK;
             }
             else {
@@ -91,12 +139,12 @@ public class Prompt {
         }
         else if(isFetchCommand(tokens)) {
             if(hasOneArg(tokens)) {
-                commandMessage = MSG_OK;
-                currentCommand = COMMAND_FETCH;
+                arg1            = getFirstArg(tokens);
+                currentCommand  = COMMAND_FETCH;
                 return OK;
             }
             else {
-                commandMessage = MSG_ERROR_INVALID;
+                commandMessage  = MSG_ERROR_INVALID;
                 return ERROR;
             }
         }

@@ -147,7 +147,7 @@ public class PromptTest {
         Prompt testPrompt = new Prompt();
 
         boolean succesful = testPrompt.execute("fetch thing_1");
-        Assert.assertTrue("Executing fetch on a key not defined should be rejected.", succesful);
+        Assert.assertFalse("Executing fetch on a key not defined should be rejected.", succesful);
         Assert.assertEquals(
                 "Fetching an undefined key should return Value not found error.",
                 "Value not found.",
@@ -183,7 +183,7 @@ public class PromptTest {
 
         testPrompt.execute("put thing_1 thing2");
         boolean succesful = testPrompt.execute("fetch");
-        Assert.assertTrue("Executing fetch without a key should be rejected.", succesful);
+        Assert.assertFalse("Executing fetch without a key should be rejected.", succesful);
         Assert.assertEquals(
                 "Fetching without a key should return invalid syntax error.",
                 "Invalid syntax.",
