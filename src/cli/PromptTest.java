@@ -119,4 +119,75 @@ public class PromptTest {
         Assert.assertFalse("Executing an unknown command should be rejected.", successful);
         Assert.assertEquals("Unknown command. Known commands are: put, fetch, exit", testPrompt.getCommandMessage());
     }
+
+    /**
+     * By typing in ">fetch key" after putting a key-value pair, the value
+     * for this key should be returned.
+     */
+    @Test
+    public void shouldAcceptValidFetch() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("put thing_1 thing2");
+        boolean succesful = testPrompt.execute("fetch thing_1");
+        Assert.assertTrue("Executing fetch with valid input should be accepted.", succesful);
+        Assert.assertEquals(
+                "Fetching a key should return the key's value.",
+                "thing2",
+                testPrompt.getCommandMessage()
+        );
+    }
+
+    /**
+     * By typing in ">fetch key" where key has not been mapped should
+     * be rejected and indicate "Value not found." message.
+     */
+    @Test
+    public void shouldRejectFetchUndefinedKey() {
+        Prompt testPrompt = new Prompt();
+
+        boolean succesful = testPrompt.execute("fetch thing_1");
+        Assert.assertTrue("Executing fetch on a key not defined should be rejected.", succesful);
+        Assert.assertEquals(
+                "Fetching an undefined key should return Value not found error.",
+                "Value not found.",
+                testPrompt.getCommandMessage()
+        );
+    }
+
+    /**
+     * By typing in ">fetch key thing1" after putting a key-value pair, the input
+     * should be rejected and indicate invalid syntax.
+     */
+    @Test
+    public void shouldRejectFetchWithExtraParams() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("put thing_1 thing2");
+        boolean succesful = testPrompt.execute("fetch thing_1 thing3");
+        Assert.assertFalse("Executing fetch with extra parameters should be rejected.", succesful);
+        Assert.assertEquals(
+                "Fetching with extra parameters should return invalid syntax error.",
+                "Invalid syntax.",
+                testPrompt.getCommandMessage()
+        );
+    }
+
+    /**
+     * By typing in ">fetch" without a key, the input should be rejected
+     * and indicate invalid syntax.
+     */
+    @Test
+    public void shouldRejectFetchWithNoParams() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("put thing_1 thing2");
+        boolean succesful = testPrompt.execute("fetch");
+        Assert.assertTrue("Executing fetch without a key should be rejected.", succesful);
+        Assert.assertEquals(
+                "Fetching without a key should return invalid syntax error.",
+                "Invalid syntax.",
+                testPrompt.getCommandMessage()
+        );
+    }
 }

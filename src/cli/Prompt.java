@@ -8,6 +8,7 @@ public class Prompt {
     private final String PROMPT         = "> ";
     private final String COMMAND_EXIT   = "exit";
     private final String COMMAND_PUT    = "put";
+    private final String COMMAND_FETCH  = "fetch";
     private final String MSG_ERROR_INVALID = "Invalid syntax.";
     private final String MSG_ERROR_UNKWN = "Unknown command. Known commands are: put, fetch, exit";
     private final String MSG_OK     = "ok";
@@ -88,6 +89,17 @@ public class Prompt {
                 return ERROR;
             }
         }
+        else if(isFetchCommand(tokens)) {
+            if(hasOneArg(tokens)) {
+                commandMessage = MSG_OK;
+                currentCommand = COMMAND_FETCH;
+                return OK;
+            }
+            else {
+                commandMessage = MSG_ERROR_INVALID;
+                return ERROR;
+            }
+        }
         else {
             commandMessage = MSG_ERROR_UNKWN;
             return ERROR;
@@ -117,6 +129,20 @@ public class Prompt {
 
     private boolean hasTwoArgs(String[] tokens) {
         if(tokens.length - 1 == 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isFetchCommand(String[] tokens) {
+        if(tokens[0].equalsIgnoreCase(COMMAND_FETCH)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasOneArg(String[] tokens) {
+        if(tokens.length - 1 == 1) {
             return true;
         }
         return false;
