@@ -2,23 +2,25 @@
 
 import cli.Prompt;
 
+import java.io.Console;
+
 public class Driver {
 
     public static void main(String[] args) {
 
-        Prompt CLIPrompt;
+        /**
+         * Try to get a Console, if available.
+         */
+        Console CLIConsole = System.console();
 
-        try {
-            /**
-             * Try to get a Console, if available.
-             */
-            CLIPrompt = new Prompt();
-        } catch (Prompt.FailedToGetConsoleException e) {
+        Prompt prompt = new Prompt();
+
+        if(CLIConsole == null) {
             System.out.println("ERROR: Failed to get CLI Console.");
             return;
         }
 
-        while(CLIPrompt.shouldLoop()) {
+        while(prompt.shouldExit == false) {
             /**
              * 1. Print cursor
              * 2. Await input
@@ -27,10 +29,14 @@ public class Driver {
              *      If invalid, state unknown command
              * loop()
              */
-            CLIPrompt.printCursor();
-            CLIPrompt.awaitLineFromConsole();
+            System.out.print(prompt.getPROMPT());
+
+            String userInput = CLIConsole.readLine();
+
+            boolean successful = prompt.execute(userInput);
         }
 
     }
+
 
 }

@@ -4,44 +4,105 @@ import java.io.Console;
 
 public class Prompt {
 
-    private final String PROMPT = "> ";
-    private Console CLIConsole;
+    public final boolean OK     = true;
+    public final boolean ERROR  = false;
 
-    public static class FailedToGetConsoleException extends Exception {}
+    private final String PROMPT         = "> ";
+    private final String COMMAND_EXIT   = "exit";
+    private final String COMMAND_PUT    = "put";
+    private final String ERROR_MSG_INVALID = "Invalid syntax.";
 
-    /**
-     * A prompt depends on the console for user input from the terminal.
-     * Throws an exception if the prompt object cannot be accessed.
-     * @throws FailedToGetConsoleException
-     */
-    public Prompt() throws FailedToGetConsoleException {
-        CLIConsole = System.console();
+    private String requestedCommand;
+    private String arg1;
+    private String arg2;
+    private String currentCommand;
 
-        if(CLIConsole == null) {
-            throw new FailedToGetConsoleException();
-        }
+    public boolean shouldExit;
+
+    private String lastErrorMessage;
+
+    public String getLastErrorMessage() {
+        return lastErrorMessage;
     }
 
-    /**
-     * Prints a "> " line to standard out without a new line.
-     * @return A string representing the prompt.
-     */
-    public String printCursor() {
-        System.out.print(PROMPT);
+    public Prompt() {
+        shouldExit = false;
+        lastErrorMessage = "";
+        currentCommand = "";
+    }
+
+    public String getPROMPT() {
         return PROMPT;
     }
 
-    /**
-     * Awaits input from the user via the terminal. If no input is provided,
-     * the empty string is returned.
-     * @return
-     */
-    public String awaitLineFromConsole() {
-        String userInput = CLIConsole.readLine();
-        return userInput == null ? "" : userInput;
+    public boolean execute(String userInput) {
+        if(userInput == null) {
+            return false;
+        }
+
+
+        String[] tokens = cleanUserInput(userInput);
+
+        if(validateCommand(tokens) == false) {
+            return ERROR;
+        }
+
+        return OK;
     }
 
-    public Boolean shouldLoop() {
-        return true;
+    private String[] cleanUserInput(String userInput) {
+
+        return userInput
+                .trim()
+                .replaceAll(" +", " ")
+                .split(" ");
+    }
+
+    private boolean validateCommand(String[] tokens) {
+        if(tokens == null || tokens.length == 0) {
+            return ERROR;
+        }
+
+        if(isExitCommand(tokens) && hasNoArgs(tokens)) {
+            currentCommand = COMMAND_EXIT;
+            shouldExit = true;
+        }
+        else if(isPutCommand(tokens) && hasTwoArgs(tokens)) {
+            currentCommand = COMMAND_PUT;
+        }
+        else {
+            lastErrorMessage = ERROR_MSG_INVALID;
+            return ERROR;
+        }
+
+        return OK;
+    }
+
+    private boolean isExitCommand(String[] tokens) {
+        if(tokens[0].equalsIgnoreCase(COMMAND_EXIT)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasNoArgs(String[] tokens) {
+        if(tokens.length - 1 == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPutCommand(String[] tokens) {
+        if(tokens[0].equalsIgnoreCase(COMMAND_PUT)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasTwoArgs(String[] tokens) {
+        if(tokens.length - 1 == 2) {
+            return true;
+        }
+        return false;
     }
 }
