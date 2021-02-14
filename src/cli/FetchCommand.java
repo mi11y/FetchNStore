@@ -6,8 +6,6 @@ public class FetchCommand extends AbstractCommand {
 
     private AbstractDataStore dataStore;
 
-    private String arg1;
-
     public FetchCommand(AbstractDataStore dataStore) {
         this.dataStore = dataStore;
     }
