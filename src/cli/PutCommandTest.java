@@ -50,6 +50,15 @@ public class PutCommandTest {
     }
 
     @Test
+    public void shouldRejectNullCommand() {
+        boolean isPutCommand = new PutCommand(new MapDataStore()).isPutCommand(null);
+        Assert.assertFalse(
+                "The isPutCommand() method should reject a null token array",
+                isPutCommand
+        );
+    }
+
+    @Test
     public void shouldSetOKMessage() {
         String[] testTokens = {"put", "key", "value"};
 
@@ -86,6 +95,18 @@ public class PutCommandTest {
 
         Assert.assertEquals(
                 "PutCommand class should set the 'Invalid syntax.' command message on put with extra key params",
+                "Invalid syntax.",
+                testPutCommand.getCommandMessage()
+        );
+    }
+
+    @Test
+    public void shouldSetInvalidSyntaxMessageOnNullTokens() {
+        PutCommand testPutCommand = new PutCommand(new MapDataStore());
+        testPutCommand.handle(null);
+
+        Assert.assertEquals(
+                "The handle() method should set the 'Invalid syntax.' command message when given null token array",
                 "Invalid syntax.",
                 testPutCommand.getCommandMessage()
         );

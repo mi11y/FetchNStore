@@ -13,7 +13,7 @@ public class PutCommand extends AbstractCommand {
     }
 
     public void handle(String[] tokens) {
-        if(hasTwoArgs(tokens) == false) {
+        if(tokens == null || hasTwoArgs(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
         }
         else {
@@ -23,17 +23,11 @@ public class PutCommand extends AbstractCommand {
     }
 
     public boolean isPutCommand(String[] tokens) {
-        if(tokens[0].equalsIgnoreCase(COMMAND_PUT)) {
-            return true;
-        }
-        return false;
+        return tokens != null && tokens[0].equalsIgnoreCase(COMMAND_PUT);
     }
 
     private boolean hasTwoArgs(String[] tokens) {
-        if(tokens.length - 1 == 2) {
-            return true;
-        }
-        return false;
+        return tokens != null && tokens.length - 1 == 2;
     }
 
 
