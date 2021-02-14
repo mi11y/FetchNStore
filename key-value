@@ -1,14 +1,50 @@
 #!/bin/env -S java -cp ./out/artifacts/FetchNStore_jar/* --source 14
 
+/*
+ * This key-value program relies on the use of the shebang mechanism above
+ * to meet the "./key-value" requirement to start the program.
+ * This was developed on Ubuntu and should (hopefully) work on other
+ * linux-ish machines.
+ *
+ * The shebang above also points java to the compiled .jar artifact to
+ * use for running this program. Thus there should (hopefully) be no need to
+ * compile anything. You can view the source code in src/cli.
+ *
+ * Uses:
+ * - Adopt openJDK 14
+ * - On Ubuntu 20.04 LTS
+ * - Intellij-IDEA CE
+ *
+ * Despite this being a shebang Java file, we can still import our Prompt class
+ * because we specified the class path (-cp) above.
+ */
 import cli.Prompt;
 
 import java.io.Console;
 
+/**
+ *
+ * This driver class is responsible for the following:
+ * 1. Printing the "> " cursor to the terminal
+ * 2. Accepting user input
+ * 3. Delegating the handling of that input to the Prompt class.
+ * 4. Printing the Prompt's response to the terminal
+ * 5. If indicated by the Prompt, exiting the program.
+ *
+ * It is worth noting that this class has no Tests. Because of that,
+ * this class was built to involve as little logic as possible and delegate most
+ * logic to the Prompt (and others) class which are tested.
+ */
 public class Driver {
 
+    /**
+     * When this key-value file is executed via "./key-value", java
+     * will execute the main() method defined in the first class.
+     * @param args
+     */
     public static void main(String[] args) {
 
-        /**
+        /*
          * Try to get a Console, if available.
          */
         Console CLIConsole = System.console();
@@ -21,14 +57,7 @@ public class Driver {
         Prompt prompt = new Prompt();
 
         while(prompt.shouldExit() == false) {
-            /**
-             * 1. Print cursor
-             * 2. Await input
-             * 3. Tokenize and examine input
-             * 4. When valid input, send to data store
-             *      If invalid, state unknown command
-             * loop()
-             */
+
             System.out.print(prompt.getCursor());
 
             String userInput = CLIConsole.readLine();
