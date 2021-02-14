@@ -22,6 +22,16 @@ public class PromptTest {
     }
 
     @Test
+    public void shouldRejectInvalidExit() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("exit thing1");
+
+        Assert.assertFalse("The prompt should reject an exit if given with extra args.", testPrompt.shouldExit);
+        Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
+    }
+
+    @Test
     public void shouldAcceptValidPut() {
         Prompt testPrompt = new Prompt();
 
