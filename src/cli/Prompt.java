@@ -1,7 +1,5 @@
 package cli;
 
-import java.io.Console;
-
 public class Prompt {
 
     public final boolean OK     = true;
@@ -10,10 +8,10 @@ public class Prompt {
     private final String PROMPT         = "> ";
     private final String COMMAND_EXIT   = "exit";
     private final String COMMAND_PUT    = "put";
-    private final String ERROR_MSG_INVALID = "Invalid syntax.";
-    private final String ERROR_MSG_UNKWN   = "Unknown command. Known commands are: put, fetch, exit";
-    private final String OK_MSG = "ok";
-    private final String BYE_MSG = "Bye!";
+    private final String MSG_ERROR_INVALID = "Invalid syntax.";
+    private final String MSG_ERROR_UNKWN = "Unknown command. Known commands are: put, fetch, exit";
+    private final String MSG_OK     = "ok";
+    private final String MSG_BYE    = "Bye!";
 
     private String requestedCommand;
     private String arg1;
@@ -69,27 +67,27 @@ public class Prompt {
 
         if(isExitCommand(tokens)) {
             if(hasNoArgs(tokens)) {
-                commandMessage = BYE_MSG;
+                commandMessage = MSG_BYE;
                 currentCommand = COMMAND_EXIT;
                 shouldExit = true;
             }
             else {
-                commandMessage = ERROR_MSG_INVALID;
+                commandMessage = MSG_ERROR_INVALID;
                 return ERROR;
             }
         }
         else if(isPutCommand(tokens)) {
             if(hasTwoArgs(tokens)) {
-                commandMessage = OK_MSG;
+                commandMessage = MSG_OK;
                 currentCommand = COMMAND_PUT;
             }
             else {
-                commandMessage = ERROR_MSG_INVALID;
+                commandMessage = MSG_ERROR_INVALID;
                 return ERROR;
             }
         }
         else {
-            commandMessage = ERROR_MSG_UNKWN;
+            commandMessage = MSG_ERROR_UNKWN;
             return ERROR;
         }
 
