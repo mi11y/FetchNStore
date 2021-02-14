@@ -19,10 +19,8 @@ public class FetchCommand extends AbstractCommand {
 
     /**
      * Creates a FetchCommand handling class. The class requires an
-     * AbstractDataStore to fetch values from. It can be any data store
-     * that implements Create() such that it behaves as both create
-     * and update. The data store must also implement Read(). Others are
-     * not used.
+     * AbstractDataStore to fetch values from. It requires read()
+     * to be implemented; others are not used.
      *
      * @param dataStore An AbstractDataStore to be used for fetching values from.
      */
