@@ -16,7 +16,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     public void handle(String[] tokens) {
-        if(hasNoArgs(tokens) == false) {
+        if(tokens == null || hasNoArgs(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
         }
         else {
@@ -26,17 +26,11 @@ public class ExitCommand extends AbstractCommand {
     }
 
     public boolean isExitCommand(String[] tokens) {
-        if(tokens[0].equalsIgnoreCase(COMMAND_EXIT)) {
-            return true;
-        }
-        return false;
+        return tokens != null && tokens[0].equalsIgnoreCase(COMMAND_EXIT);
     }
 
     private boolean hasNoArgs(String[] tokens) {
-        if(tokens.length - 1 == 0) {
-            return true;
-        }
-        return false;
+        return tokens.length - 1 == 0;
     }
 
 }

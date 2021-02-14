@@ -11,7 +11,7 @@ public class ExitCommandTest {
 
         boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
         Assert.assertTrue(
-                "The exit command class should recognize the exit command token",
+                "The isExitCommand() method should recognize the exit command token",
                 isExitCommand
         );
     }
@@ -22,7 +22,16 @@ public class ExitCommandTest {
 
         boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
         Assert.assertFalse(
-                "The exit command class should reject a non-exit command token",
+                "The isExitCommand() method should reject a non-exit command token",
+                isExitCommand
+        );
+    }
+
+    @Test
+    public void shouldRejectNullCommand() {
+        boolean isExitCommand = new ExitCommand().isExitCommand(null);
+        Assert.assertFalse(
+                "The isExitCommand() method should reject null tokens",
                 isExitCommand
         );
     }
@@ -33,7 +42,7 @@ public class ExitCommandTest {
 
         boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
         Assert.assertTrue(
-                "The exit command class should recognize an exit command with extra params",
+                "The isExitCommand() method should recognize an exit command with extra params",
                 isExitCommand
         );
     }
@@ -79,4 +88,15 @@ public class ExitCommandTest {
         );
     }
 
+    @Test
+    public void shouldSetInvalidSyntaxOnNullTokens() {
+        ExitCommand testExitCommand = new ExitCommand();
+        testExitCommand.handle(null);
+
+        Assert.assertEquals(
+                "The invalid syntax message should be set when exit is called with null tokens",
+                "Invalid syntax.",
+                testExitCommand.getCommandMessage()
+        );
+    }
 }
