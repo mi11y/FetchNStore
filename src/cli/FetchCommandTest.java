@@ -30,6 +30,16 @@ public class FetchCommandTest {
     }
 
     @Test
+    public void shouldRejectNullCommand() {
+        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isFetchCommand(null);
+
+        Assert.assertFalse(
+                "The isFetchCommand() should reject when given null tokens",
+                isFetchCommand
+        );
+    }
+
+    @Test
     public void shouldRecognizeFetchCommandWithExtraParams() {
         String[] testTokens = {"fetch", "key", "potato"};
 
@@ -49,6 +59,18 @@ public class FetchCommandTest {
 
         Assert.assertEquals(
                 "The handle() method should set the command message to 'Invalid syntax' error message",
+                "Invalid syntax.",
+                testFetchCommand.getCommandMessage()
+        );
+    }
+
+    @Test
+    public void shouldSetInvalidSyntaxCommandMessageOnNullTokens() {
+        FetchCommand testFetchCommand = new FetchCommand(new MapDataStore());
+        testFetchCommand.handle(null);
+
+        Assert.assertEquals(
+                "The handle() method should set the command message to 'Invalid syntax' error message when given null for tokens",
                 "Invalid syntax.",
                 testFetchCommand.getCommandMessage()
         );

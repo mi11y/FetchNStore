@@ -11,7 +11,7 @@ public class FetchCommand extends AbstractCommand {
     }
 
     public void handle(String[] tokens) {
-        if(hasOneArg(tokens) == false) {
+        if(tokens == null || hasOneArg(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
             isOK = false;
         }
@@ -29,7 +29,7 @@ public class FetchCommand extends AbstractCommand {
     }
 
     public boolean isFetchCommand(String[] tokens) {
-        if(tokens[0].equalsIgnoreCase(COMMAND_FETCH)) {
+        if(tokens != null && tokens[0].equalsIgnoreCase(COMMAND_FETCH)) {
             return true;
         }
         return false;
