@@ -5,12 +5,21 @@ import org.junit.Test;
 
 public class PromptTest {
 
+    /**
+     * The prompt cursor string should not contain a new line.
+     */
     @Test
     public void shouldPrintPromptWithoutNewline() {
         Prompt testPrompt = new Prompt();
-        Assert.assertFalse("The prompt should be printed without a newline.", testPrompt.getPROMPT().contains("\n"));
+        Assert.assertFalse(
+                "The prompt should be printed without a newline.",
+                testPrompt.getPROMPT().contains("\n")
+        );
     }
 
+    /**
+     * By typing in ">exit" the prompt should indicate to exit the CLI.
+     */
     @Test
     public void shouldSignalExit() {
         Prompt testPrompt = new Prompt();
@@ -21,6 +30,9 @@ public class PromptTest {
         Assert.assertEquals("Bye!", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">exit arg1" the prompt should not exit and indicate invalid syntax.
+     */
     @Test
     public void shouldRejectInvalidExit() {
         Prompt testPrompt = new Prompt();
@@ -31,6 +43,9 @@ public class PromptTest {
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">put thing1 thing2" as appropriate, the prompt should accept this input.
+     */
     @Test
     public void shouldAcceptValidPut() {
         Prompt testPrompt = new Prompt();
@@ -40,6 +55,10 @@ public class PromptTest {
         Assert.assertEquals("ok", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">   put   thing1WithWhitespace    thing2", the prompt should accept
+     * the input and ignore the extra whitespace.
+     */
     @Test
     public void shouldAcceptPromptWithExtraWhitespace() {
         Prompt testPrompt = new Prompt();
@@ -49,6 +68,10 @@ public class PromptTest {
         Assert.assertEquals("ok", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">put", the prompt should reject the input and indicate
+     * invalid syntax.
+     */
     @Test
     public void shouldRejectPutWithNoParams() {
         Prompt testPrompt = new Prompt();
@@ -58,6 +81,10 @@ public class PromptTest {
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">put thing1", the prompt should reject the input and
+     * indicate invalid syntax.
+     */
     @Test
     public void shouldRejectPutWithOneParam() {
         Prompt testPrompt = new Prompt();
@@ -67,6 +94,10 @@ public class PromptTest {
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">put thing1 thing2 thing3", the prompt should reject the
+     * input and indicate invalid syntax.
+     */
     @Test
     public void shouldRejectPutWithThreeParams() {
         Prompt testPrompt = new Prompt();
@@ -76,6 +107,10 @@ public class PromptTest {
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
+    /**
+     * By typing in ">someCommandThatDoesntExist", the prompt should reject
+     * the input and indicate what commands are known.
+     */
     @Test
     public void shouldRejectUnknownCommands() {
         Prompt testPrompt = new Prompt();
