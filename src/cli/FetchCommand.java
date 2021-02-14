@@ -1,9 +1,31 @@
 package cli;
 
+/**
+ * The FetchCommand class is responsible for handling all fetch commands.
+ * It will fetch from the provided Data Store if the user's commands
+ * are not malformed.
+ *
+ * FetchCommand will set the commandMessage to the fetched value if
+ * it is found, or to "Value not found." if that key is not contained in
+ * the data store. It will set commandMessage to "Invalid Syntax." if the
+ * fetch command is malformed.
+ */
 public class FetchCommand extends AbstractCommand {
 
+    /**
+     * A data store to be used for fetching key-values.
+     */
     private final AbstractDataStore dataStore;
 
+    /**
+     * Creates a FetchCommand handling class. The class requires an
+     * AbstractDataStore to fetch values from. It can be any data store
+     * that implements Create() such that it behaves as both create
+     * and update. The data store must also implement Read(). Others are
+     * not used.
+     *
+     * @param dataStore An AbstractDataStore to be used for fetching values from.
+     */
     public FetchCommand(AbstractDataStore dataStore) {
         this.dataStore = dataStore;
     }
@@ -51,6 +73,17 @@ public class FetchCommand extends AbstractCommand {
         return false;
     }
 
+    /**
+     * This helper method is responsible for checking if the user's input contains
+     * only one parameter/arg following the command token. It will return true if
+     * only one token follows the command token, false otherwise.
+     *
+     * @param tokens A String[] array representing the user's input. It is
+     *               expected the command to be first in the array, followed by
+     *               any parameters
+     * @return A boolean (true) indicating if only one token follows the command token,
+     * false otherwise.
+     */
     private boolean hasOneArg(String[] tokens) {
         if(tokens.length - 1 == 1) {
             return true;
