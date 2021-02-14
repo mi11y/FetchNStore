@@ -35,15 +35,15 @@ public class Prompt {
 
         String[] tokens = cleanUserInput(userInput);
 
-        if(exitCommand.isExitCommand(tokens)) {
+        if(exitCommand.isMatchingCommand(tokens)) {
             exitCommand.handle(tokens);
             commandMessage = exitCommand.getCommandMessage();
         }
-        else if(putCommand.isPutCommand(tokens)) {
+        else if(putCommand.isMatchingCommand(tokens)) {
             putCommand.handle(tokens);
             commandMessage = putCommand.getCommandMessage();
         }
-        else if(fetchCommand.isFetchCommand(tokens)) {
+        else if(fetchCommand.isMatchingCommand(tokens)) {
             fetchCommand.handle(tokens);
             commandMessage = fetchCommand.getCommandMessage();
         }

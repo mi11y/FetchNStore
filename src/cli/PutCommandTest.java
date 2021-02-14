@@ -9,7 +9,7 @@ public class PutCommandTest {
     public void shouldRecognizePutCommand() {
         String[] testTokens = {"put", "key", "value"};
 
-        boolean isPutComand = new PutCommand(new MapDataStore()).isPutCommand(testTokens);
+        boolean isPutComand = new PutCommand(new MapDataStore()).isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "A valid put command with two params should be recognized",
                 isPutComand
@@ -20,7 +20,7 @@ public class PutCommandTest {
     public void shouldReconizePutCommandWithExtraParams() {
         String[] testTokens = {"put", "key", "value", "potato"};
 
-        boolean isPutCommand = new PutCommand(new MapDataStore()).isPutCommand(testTokens);
+        boolean isPutCommand = new PutCommand(new MapDataStore()).isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "A put command with extra params should be recognized",
                 isPutCommand
@@ -31,7 +31,7 @@ public class PutCommandTest {
     public void shouldRecognizePutCommandWithNoParams() {
         String[] testTokens = {"put"};
 
-        boolean isPutCommand = new PutCommand(new MapDataStore()).isPutCommand(testTokens);
+        boolean isPutCommand = new PutCommand(new MapDataStore()).isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "A put command with no params should be recognized.",
                 isPutCommand
@@ -42,7 +42,7 @@ public class PutCommandTest {
     public void shouldRejectNonPutCommand() {
         String[] testTokens = {"potato"};
 
-        boolean isPutCommand = new PutCommand(new MapDataStore()).isPutCommand(testTokens);
+        boolean isPutCommand = new PutCommand(new MapDataStore()).isMatchingCommand(testTokens);
         Assert.assertFalse(
                 "A non-put command should be rejected",
                 isPutCommand
@@ -51,7 +51,7 @@ public class PutCommandTest {
 
     @Test
     public void shouldRejectNullCommand() {
-        boolean isPutCommand = new PutCommand(new MapDataStore()).isPutCommand(null);
+        boolean isPutCommand = new PutCommand(new MapDataStore()).isMatchingCommand(null);
         Assert.assertFalse(
                 "The isPutCommand() method should reject a null token array",
                 isPutCommand

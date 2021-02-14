@@ -57,4 +57,26 @@ public abstract class AbstractCommand {
         return tokens[2];
     }
 
+    /**
+     * All commands shall handler user input in the form of a String array
+     * of tokens. It is up to class calling the command to remove extra whitespace
+     * and split the user's input.
+     * @param tokens A String[] array representing the user's input. It is
+     *               expected the command to be first in the array, followed by
+     *               any parameters
+     */
+    public void handle(String[] tokens) { }
+
+
+    /**
+     * All commands should implement this method to indicate to a caller
+     * whether the class is responsible for handling a command.
+     *
+     * @param tokens A String[] array representing the user's input.  It is
+     *               expected the command to be first in the array, followed by
+     *               any parameters
+     * @return A boolean (true) indicating if a command class is responsible for
+     * handling the user's input.
+     */
+    public boolean isMatchingCommand(String[] tokens) { return false; }
 }

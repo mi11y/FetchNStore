@@ -9,7 +9,7 @@ public class FetchCommandTest {
     public void shouldRecognizeFetchCommand() {
         String[] testTokens = {"fetch"};
 
-        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isFetchCommand(testTokens);
+        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isMatchingCommand(testTokens);
 
         Assert.assertTrue(
                 "The FetchCommand class should recognize the fetch command token",
@@ -21,7 +21,7 @@ public class FetchCommandTest {
     public void shouldRejectNonFetchCommand() {
         String[] testTokens = {"potato"};
 
-        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isFetchCommand(testTokens);
+        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isMatchingCommand(testTokens);
 
         Assert.assertFalse(
                 "The isFetchCommand() method should reject a non-fetch command",
@@ -31,7 +31,7 @@ public class FetchCommandTest {
 
     @Test
     public void shouldRejectNullCommand() {
-        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isFetchCommand(null);
+        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isMatchingCommand(null);
 
         Assert.assertFalse(
                 "The isFetchCommand() should reject when given null tokens",
@@ -43,7 +43,7 @@ public class FetchCommandTest {
     public void shouldRecognizeFetchCommandWithExtraParams() {
         String[] testTokens = {"fetch", "key", "potato"};
 
-        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isFetchCommand(testTokens);
+        boolean isFetchCommand = new FetchCommand(new MapDataStore()).isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "The isFetchCommand() method should recognize a fetch command with extra params",
                 isFetchCommand

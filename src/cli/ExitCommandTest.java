@@ -9,7 +9,7 @@ public class ExitCommandTest {
     public void shouldRecognizeExitCommand() {
         String[] testTokens = {"exit"};
 
-        boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
+        boolean isExitCommand = new ExitCommand().isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "The isExitCommand() method should recognize the exit command token",
                 isExitCommand
@@ -20,7 +20,7 @@ public class ExitCommandTest {
     public void shouldRejectNonExitCommand() {
         String[] testTokens = {"potato"};
 
-        boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
+        boolean isExitCommand = new ExitCommand().isMatchingCommand(testTokens);
         Assert.assertFalse(
                 "The isExitCommand() method should reject a non-exit command token",
                 isExitCommand
@@ -29,7 +29,7 @@ public class ExitCommandTest {
 
     @Test
     public void shouldRejectNullCommand() {
-        boolean isExitCommand = new ExitCommand().isExitCommand(null);
+        boolean isExitCommand = new ExitCommand().isMatchingCommand(null);
         Assert.assertFalse(
                 "The isExitCommand() method should reject null tokens",
                 isExitCommand
@@ -40,7 +40,7 @@ public class ExitCommandTest {
     public void shouldRecognizeExitCommandWithExtras() {
         String[] testTokens = {"exit", "potato"};
 
-        boolean isExitCommand = new ExitCommand().isExitCommand(testTokens);
+        boolean isExitCommand = new ExitCommand().isMatchingCommand(testTokens);
         Assert.assertTrue(
                 "The isExitCommand() method should recognize an exit command with extra params",
                 isExitCommand
