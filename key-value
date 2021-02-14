@@ -13,14 +13,14 @@ public class Driver {
          */
         Console CLIConsole = System.console();
 
-        Prompt prompt = new Prompt();
-
         if(CLIConsole == null) {
             System.out.println("ERROR: Failed to get CLI Console.");
             return;
         }
 
-        while(prompt.shouldExit == false) {
+        Prompt prompt = new Prompt();
+
+        while(prompt.shouldExit() == false) {
             /**
              * 1. Print cursor
              * 2. Await input

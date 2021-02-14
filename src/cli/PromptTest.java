@@ -26,7 +26,7 @@ public class PromptTest {
 
         testPrompt.execute("exit");
 
-        Assert.assertTrue("After entering 'exit', the prompt should set shouldExit to true.", testPrompt.shouldExit);
+        Assert.assertTrue("After entering 'exit', the prompt should set shouldExit to true.", testPrompt.shouldExit());
         Assert.assertEquals("Bye!", testPrompt.getCommandMessage());
     }
 
@@ -39,7 +39,7 @@ public class PromptTest {
 
         testPrompt.execute("exit thing1");
 
-        Assert.assertFalse("The prompt should reject an exit if given with extra args.", testPrompt.shouldExit);
+        Assert.assertFalse("The prompt should reject an exit if given with extra args.", testPrompt.shouldExit());
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
