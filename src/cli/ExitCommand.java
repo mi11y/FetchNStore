@@ -1,20 +1,9 @@
 package cli;
 
-public class ExitCommand {
+public class ExitCommand extends AbstractCommand {
 
     private final String COMMAND_EXIT   = "exit";
-    private final String MSG_ERROR_INVALID = "Invalid syntax.";
     private final String MSG_BYE    = "Bye!";
-
-    private String commandMessage;
-    public String getCommandMessage() {
-        return commandMessage;
-    }
-
-    private boolean isOK;
-    public boolean getIsOK() {
-        return isOK;
-    }
 
     private boolean shouldExit;
     public boolean getShouldExit() {

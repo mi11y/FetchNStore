@@ -2,45 +2,30 @@ package cli;
 
 public class Prompt {
 
-    public PutCommand putCommand;
+    private final String PROMPT             = "> ";
+    private final String MSG_ERROR_UNKWN    = "Unknown command. Known commands are: put, fetch, exit";
 
-    public ExitCommand exitCommand;
-
-    public FetchCommand fetchCommand;
-
-    public final boolean OK     = true;
-    public final boolean ERROR  = false;
+    private PutCommand putCommand;
+    private ExitCommand exitCommand;
+    private FetchCommand fetchCommand;
+    private AbstractDataStore dataStore;
 
     public boolean shouldExit() {
         return exitCommand.getShouldExit();
     }
-
-    private final String PROMPT         = "> ";
-    private final String MSG_ERROR_UNKWN = "Unknown command. Known commands are: put, fetch, exit";
 
     private String commandMessage;
     public String getCommandMessage() {
         return commandMessage;
     }
 
-    private AbstractDataStore dataStore;
-
-    public Prompt(AbstractDataStore dataStore) {
-        init();
-        this.dataStore = dataStore;
-    }
-
     public Prompt() {
-        this.dataStore = new MapDataStore();
+        this.dataStore  = new MapDataStore();
+        putCommand      = new PutCommand(dataStore);
+        fetchCommand    = new FetchCommand(dataStore);
+        exitCommand     = new ExitCommand();
+        commandMessage  = "";
 
-        init();
-    }
-
-    private void init() {
-        commandMessage = "";
-        putCommand = new PutCommand(dataStore);
-        fetchCommand = new FetchCommand(dataStore);
-        exitCommand = new ExitCommand();
     }
 
     public String getPROMPT() {

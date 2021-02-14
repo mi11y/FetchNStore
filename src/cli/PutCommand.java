@@ -1,23 +1,12 @@
 package cli;
 
-public class PutCommand {
+public class PutCommand extends AbstractCommand {
 
     private final String COMMAND_PUT    = "put";
     private final String MSG_OK     = "ok";
-    private final String MSG_ERROR_INVALID = "Invalid syntax.";
 
 
     private AbstractDataStore dataStore;
-
-    private String commandMessage;
-    public String getCommandMessage() {
-        return commandMessage;
-    }
-
-    private boolean isOK;
-    public boolean getIsOK() {
-        return isOK;
-    }
 
     public PutCommand(AbstractDataStore dataStore) {
         this.dataStore = dataStore;
@@ -49,12 +38,6 @@ public class PutCommand {
         return false;
     }
 
-    private String getFirstArg(String[] tokens) {
-        return tokens[1];
-    }
 
-    private String getSecondArg(String[] tokens) {
-        return tokens[2];
-    }
 
 }

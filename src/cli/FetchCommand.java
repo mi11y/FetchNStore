@@ -1,21 +1,8 @@
 package cli;
 
-public class FetchCommand {
+public class FetchCommand extends AbstractCommand {
     private final String COMMAND_FETCH  = "fetch";
-    private final String MSG_ERROR_INVALID = "Invalid syntax.";
     private final String MSG_ERROR_VALUE = "Value not found.";
-
-
-    private String commandMessage;
-    public String getCommandMessage() {
-        return commandMessage;
-    }
-
-    private boolean isOK;
-    public boolean getIsOK() {
-        return isOK;
-    }
-
 
     private AbstractDataStore dataStore;
 
@@ -55,10 +42,6 @@ public class FetchCommand {
             return true;
         }
         return false;
-    }
-
-    private String getFirstArg(String[] tokens) {
-        return tokens[1];
     }
 
 }
