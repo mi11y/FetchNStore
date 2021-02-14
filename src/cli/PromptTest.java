@@ -62,7 +62,7 @@ public class PromptTest {
     public void shouldAcceptPromptWithExtraWhitespace() {
         Prompt testPrompt = new Prompt();
 
-        testPrompt.execute("      put       thing_1   thing_2      ");
+        testPrompt.execute("      put       thing_1\t \tthing_2      ");
         Assert.assertEquals("ok", testPrompt.getCommandMessage());
     }
 

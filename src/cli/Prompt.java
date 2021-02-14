@@ -113,7 +113,7 @@ public class Prompt {
 
         return userInput
                 .trim()
-                .replaceAll(" +", " ")
+                .replaceAll("( |\\t)+", " ")
                 .split(" ");
     }
 }
