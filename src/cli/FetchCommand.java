@@ -13,17 +13,14 @@ public class FetchCommand extends AbstractCommand {
     public void handle(String[] tokens) {
         if(tokens == null || hasOneArg(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
-            isOK = false;
         }
         else {
             String readResult   = dataStore.read(getFirstArg(tokens));
             if(readResult.isBlank() == false) {
                 commandMessage      = readResult;
-                isOK = true;
             }
             else {
                 commandMessage = MSG_ERROR_VALUE;
-                isOK = false;
             }
         }
     }

@@ -8,11 +8,6 @@ public class AbstractCommand {
         return commandMessage;
     }
 
-    protected boolean isOK;
-    public boolean getIsOK() {
-        return isOK;
-    }
-
     protected String getFirstArg(String[] tokens) {
         return tokens[1];
     }

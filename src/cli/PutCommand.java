@@ -15,12 +15,10 @@ public class PutCommand extends AbstractCommand {
     public void handle(String[] tokens) {
         if(hasTwoArgs(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
-            isOK = false;
         }
         else {
             dataStore.create(getFirstArg(tokens), getSecondArg(tokens));
             commandMessage = MSG_OK;
-            isOK = true;
         }
     }
 

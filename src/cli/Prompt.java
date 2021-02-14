@@ -28,34 +28,29 @@ public class Prompt {
         return "> ";
     }
 
-    public boolean execute(String userInput) {
+    public void execute(String userInput) {
         if(userInput == null || userInput.isBlank()) {
-            return false;
+            return;
         }
 
-        boolean isOK = false;
         String[] tokens = cleanUserInput(userInput);
 
         if(exitCommand.isExitCommand(tokens)) {
             exitCommand.handle(tokens);
             commandMessage = exitCommand.getCommandMessage();
-            isOK = exitCommand.getIsOK();
         }
         else if(putCommand.isPutCommand(tokens)) {
             putCommand.handle(tokens);
             commandMessage = putCommand.getCommandMessage();
-            isOK = putCommand.getIsOK();
         }
         else if(fetchCommand.isFetchCommand(tokens)) {
             fetchCommand.handle(tokens);
             commandMessage = fetchCommand.getCommandMessage();
-            isOK = fetchCommand.getIsOK();
         }
         else {
             commandMessage = "Unknown command. Known commands are: put, fetch, exit";
         }
 
-        return isOK;
     }
 
     private String[] cleanUserInput(String userInput) {

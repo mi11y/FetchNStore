@@ -50,8 +50,7 @@ public class PromptTest {
     public void shouldAcceptValidPut() {
         Prompt testPrompt = new Prompt();
 
-        boolean succesful = testPrompt.execute("put thing_1 thing_2");
-        Assert.assertTrue("Executing put with valid input should be accepted.", succesful);
+        testPrompt.execute("put thing_1 thing_2");
         Assert.assertEquals("ok", testPrompt.getCommandMessage());
     }
 
@@ -63,8 +62,7 @@ public class PromptTest {
     public void shouldAcceptPromptWithExtraWhitespace() {
         Prompt testPrompt = new Prompt();
 
-        boolean succesful = testPrompt.execute("      put       thing_1   thing_2      ");
-        Assert.assertTrue("Executing put with extra whitespace input should be accepted.", succesful);
+        testPrompt.execute("      put       thing_1   thing_2      ");
         Assert.assertEquals("ok", testPrompt.getCommandMessage());
     }
 
@@ -76,8 +74,7 @@ public class PromptTest {
     public void shouldRejectPutWithNoParams() {
         Prompt testPrompt = new Prompt();
 
-        boolean successful = testPrompt.execute("put ");
-        Assert.assertFalse("Executing put with no parameters should be rejected.", successful);
+        testPrompt.execute("put ");
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
@@ -89,8 +86,7 @@ public class PromptTest {
     public void shouldRejectPutWithOneParam() {
         Prompt testPrompt = new Prompt();
 
-        boolean successful = testPrompt.execute("put thing_1");
-        Assert.assertFalse("Executing put with one parameters should be rejected.", successful);
+        testPrompt.execute("put thing_1");
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
@@ -102,8 +98,7 @@ public class PromptTest {
     public void shouldRejectPutWithThreeParams() {
         Prompt testPrompt = new Prompt();
 
-        boolean successful = testPrompt.execute("put thing_1 thing_2 thing_3");
-        Assert.assertFalse("Executing put with three parameters should be rejected.", successful);
+        testPrompt.execute("put thing_1 thing_2 thing_3");
         Assert.assertEquals("Invalid syntax.", testPrompt.getCommandMessage());
     }
 
@@ -115,8 +110,7 @@ public class PromptTest {
     public void shouldRejectUnknownCommands() {
         Prompt testPrompt = new Prompt();
 
-        boolean successful = testPrompt.execute("notAcommand thing1 thing2");
-        Assert.assertFalse("Executing an unknown command should be rejected.", successful);
+        testPrompt.execute("notAcommand thing1 thing2");
         Assert.assertEquals("Unknown command. Known commands are: put, fetch, exit", testPrompt.getCommandMessage());
     }
 
@@ -129,8 +123,7 @@ public class PromptTest {
         Prompt testPrompt = new Prompt();
 
         testPrompt.execute("put thing_1 thing2");
-        boolean succesful = testPrompt.execute("fetch thing_1");
-        Assert.assertTrue("Executing fetch with valid input should be accepted.", succesful);
+        testPrompt.execute("fetch thing_1");
         Assert.assertEquals(
                 "Fetching a key should return the key's value.",
                 "thing2",
@@ -146,8 +139,7 @@ public class PromptTest {
     public void shouldRejectFetchUndefinedKey() {
         Prompt testPrompt = new Prompt();
 
-        boolean succesful = testPrompt.execute("fetch thing_1");
-        Assert.assertFalse("Executing fetch on a key not defined should be rejected.", succesful);
+        testPrompt.execute("fetch thing_1");
         Assert.assertEquals(
                 "Fetching an undefined key should return Value not found error.",
                 "Value not found.",
@@ -164,8 +156,7 @@ public class PromptTest {
         Prompt testPrompt = new Prompt();
 
         testPrompt.execute("put thing_1 thing2");
-        boolean succesful = testPrompt.execute("fetch thing_1 thing3");
-        Assert.assertFalse("Executing fetch with extra parameters should be rejected.", succesful);
+        testPrompt.execute("fetch thing_1 thing3");
         Assert.assertEquals(
                 "Fetching with extra parameters should return invalid syntax error.",
                 "Invalid syntax.",
@@ -182,8 +173,7 @@ public class PromptTest {
         Prompt testPrompt = new Prompt();
 
         testPrompt.execute("put thing_1 thing2");
-        boolean succesful = testPrompt.execute("fetch");
-        Assert.assertFalse("Executing fetch without a key should be rejected.", succesful);
+        testPrompt.execute("fetch");
         Assert.assertEquals(
                 "Fetching without a key should return invalid syntax error.",
                 "Invalid syntax.",

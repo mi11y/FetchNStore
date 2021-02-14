@@ -12,19 +12,16 @@ public class ExitCommand extends AbstractCommand {
 
     public ExitCommand() {
         commandMessage  = "";
-        isOK            = true;
         shouldExit      = false;
     }
 
     public void handle(String[] tokens) {
         if(hasNoArgs(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
-            isOK = false;
         }
         else {
             commandMessage = MSG_BYE;
             shouldExit = true;
-            isOK = true;
         }
     }
 
