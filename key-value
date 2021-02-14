@@ -29,7 +29,7 @@ public class Driver {
              *      If invalid, state unknown command
              * loop()
              */
-            System.out.print(prompt.getPROMPT());
+            System.out.print(prompt.getCursor());
 
             String userInput = CLIConsole.readLine();
 

@@ -2,13 +2,9 @@ package cli;
 
 public class Prompt {
 
-    private final String PROMPT             = "> ";
-    private final String MSG_ERROR_UNKWN    = "Unknown command. Known commands are: put, fetch, exit";
-
-    private PutCommand putCommand;
-    private ExitCommand exitCommand;
-    private FetchCommand fetchCommand;
-    private AbstractDataStore dataStore;
+    private final PutCommand putCommand;
+    private final ExitCommand exitCommand;
+    private final FetchCommand fetchCommand;
 
     public boolean shouldExit() {
         return exitCommand.getShouldExit();
@@ -20,7 +16,7 @@ public class Prompt {
     }
 
     public Prompt() {
-        this.dataStore  = new MapDataStore();
+        AbstractDataStore dataStore = new MapDataStore();
         putCommand      = new PutCommand(dataStore);
         fetchCommand    = new FetchCommand(dataStore);
         exitCommand     = new ExitCommand();
@@ -28,8 +24,8 @@ public class Prompt {
 
     }
 
-    public String getPROMPT() {
-        return PROMPT;
+    public String getCursor() {
+        return "> ";
     }
 
     public boolean execute(String userInput) {
@@ -56,8 +52,7 @@ public class Prompt {
             isOK = fetchCommand.getIsOK();
         }
         else {
-            commandMessage = MSG_ERROR_UNKWN;
-            isOK = false;
+            commandMessage = "Unknown command. Known commands are: put, fetch, exit";
         }
 
         return isOK;

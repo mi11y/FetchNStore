@@ -13,7 +13,7 @@ public class PromptTest {
         Prompt testPrompt = new Prompt();
         Assert.assertFalse(
                 "The prompt should be printed without a newline.",
-                testPrompt.getPROMPT().contains("\n")
+                testPrompt.getCursor().contains("\n")
         );
     }
 
