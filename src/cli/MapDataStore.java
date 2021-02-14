@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class MapDataStore extends AbstractDataStore {
 
-    private HashMap<String, String> map;
+    private final HashMap<String, String> map;
 
     public MapDataStore() {
         map = new HashMap<>();
@@ -12,6 +12,9 @@ public class MapDataStore extends AbstractDataStore {
 
     @Override
     protected boolean create(String key, String value) {
+        if(key == null || value == null) {
+            return false;
+        }
         map.put(key, value);
         return true;
     }
