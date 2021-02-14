@@ -70,6 +70,7 @@ public class Prompt {
                 commandMessage = MSG_BYE;
                 currentCommand = COMMAND_EXIT;
                 shouldExit = true;
+                return OK;
             }
             else {
                 commandMessage = MSG_ERROR_INVALID;
@@ -80,6 +81,7 @@ public class Prompt {
             if(hasTwoArgs(tokens)) {
                 commandMessage = MSG_OK;
                 currentCommand = COMMAND_PUT;
+                return OK;
             }
             else {
                 commandMessage = MSG_ERROR_INVALID;
@@ -90,8 +92,6 @@ public class Prompt {
             commandMessage = MSG_ERROR_UNKWN;
             return ERROR;
         }
-
-        return OK;
     }
 
     private boolean isExitCommand(String[] tokens) {
