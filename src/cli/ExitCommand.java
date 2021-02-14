@@ -2,9 +2,6 @@ package cli;
 
 public class ExitCommand extends AbstractCommand {
 
-    private final String COMMAND_EXIT   = "exit";
-    private final String MSG_BYE    = "Bye!";
-
     private boolean shouldExit;
     public boolean getShouldExit() {
         return shouldExit;
@@ -20,13 +17,13 @@ public class ExitCommand extends AbstractCommand {
             commandMessage = MSG_ERROR_INVALID;
         }
         else {
-            commandMessage = MSG_BYE;
+            commandMessage = "Bye!";
             shouldExit = true;
         }
     }
 
     public boolean isExitCommand(String[] tokens) {
-        return tokens != null && tokens[0].equalsIgnoreCase(COMMAND_EXIT);
+        return tokens != null && tokens[0].equalsIgnoreCase("exit");
     }
 
     private boolean hasNoArgs(String[] tokens) {

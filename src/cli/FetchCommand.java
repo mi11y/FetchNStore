@@ -1,10 +1,8 @@
 package cli;
 
 public class FetchCommand extends AbstractCommand {
-    private final String COMMAND_FETCH  = "fetch";
-    private final String MSG_ERROR_VALUE = "Value not found.";
 
-    private AbstractDataStore dataStore;
+    private final AbstractDataStore dataStore;
 
     public FetchCommand(AbstractDataStore dataStore) {
         this.dataStore = dataStore;
@@ -20,13 +18,13 @@ public class FetchCommand extends AbstractCommand {
                 commandMessage      = readResult;
             }
             else {
-                commandMessage = MSG_ERROR_VALUE;
+                commandMessage = "Value not found.";
             }
         }
     }
 
     public boolean isFetchCommand(String[] tokens) {
-        if(tokens != null && tokens[0].equalsIgnoreCase(COMMAND_FETCH)) {
+        if(tokens != null && tokens[0].equalsIgnoreCase("fetch")) {
             return true;
         }
         return false;

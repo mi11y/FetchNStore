@@ -2,11 +2,7 @@ package cli;
 
 public class PutCommand extends AbstractCommand {
 
-    private final String COMMAND_PUT    = "put";
-    private final String MSG_OK     = "ok";
-
-
-    private AbstractDataStore dataStore;
+    private final AbstractDataStore dataStore;
 
     public PutCommand(AbstractDataStore dataStore) {
         this.dataStore = dataStore;
@@ -18,12 +14,12 @@ public class PutCommand extends AbstractCommand {
         }
         else {
             dataStore.create(getFirstArg(tokens), getSecondArg(tokens));
-            commandMessage = MSG_OK;
+            commandMessage = "ok";
         }
     }
 
     public boolean isPutCommand(String[] tokens) {
-        return tokens != null && tokens[0].equalsIgnoreCase(COMMAND_PUT);
+        return tokens != null && tokens[0].equalsIgnoreCase("put");
     }
 
     private boolean hasTwoArgs(String[] tokens) {
