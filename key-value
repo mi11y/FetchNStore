@@ -1,0 +1,36 @@
+#!/bin/env -S java -cp ./out/artifacts/FetchNStore_jar/* --source 14
+
+import cli.Prompt;
+
+public class Driver {
+
+    public static void main(String[] args) {
+
+        Prompt CLIPrompt;
+
+        try {
+            /**
+             * Try to get a Console, if available.
+             */
+            CLIPrompt = new Prompt();
+        } catch (Prompt.FailedToGetConsoleException e) {
+            System.out.println("ERROR: Failed to get CLI Console.");
+            return;
+        }
+
+        while(CLIPrompt.shouldLoop()) {
+            /**
+             * 1. Print cursor
+             * 2. Await input
+             * 3. Tokenize and examine input
+             * 4. When valid input, send to data store
+             *      If invalid, state unknown command
+             * loop()
+             */
+            CLIPrompt.printCursor();
+            CLIPrompt.awaitLineFromConsole();
+        }
+
+    }
+
+}
