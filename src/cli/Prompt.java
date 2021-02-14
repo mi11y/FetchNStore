@@ -11,23 +11,28 @@ public class Prompt {
     private final String COMMAND_EXIT   = "exit";
     private final String COMMAND_PUT    = "put";
     private final String ERROR_MSG_INVALID = "Invalid syntax.";
+    private final String ERROR_MSG_UNKWN   = "Unknown command. Known commands are: put, fetch, exit";
+    private final String OK_MSG = "ok";
+    private final String BYE_MSG = "Bye!";
 
     private String requestedCommand;
     private String arg1;
     private String arg2;
     private String currentCommand;
+    public String getCurrentCommand() {
+        return currentCommand;
+    }
 
     public boolean shouldExit;
 
-    private String lastErrorMessage;
-
-    public String getLastErrorMessage() {
-        return lastErrorMessage;
+    private String commandMessage;
+    public String getCommandMessage() {
+        return commandMessage;
     }
 
     public Prompt() {
         shouldExit = false;
-        lastErrorMessage = "";
+        commandMessage = "";
         currentCommand = "";
     }
 
@@ -39,7 +44,6 @@ public class Prompt {
         if(userInput == null) {
             return false;
         }
-
 
         String[] tokens = cleanUserInput(userInput);
 
@@ -63,15 +67,29 @@ public class Prompt {
             return ERROR;
         }
 
-        if(isExitCommand(tokens) && hasNoArgs(tokens)) {
-            currentCommand = COMMAND_EXIT;
-            shouldExit = true;
+        if(isExitCommand(tokens)) {
+            if(hasNoArgs(tokens)) {
+                commandMessage = BYE_MSG;
+                currentCommand = COMMAND_EXIT;
+                shouldExit = true;
+            }
+            else {
+                commandMessage = ERROR_MSG_INVALID;
+                return ERROR;
+            }
         }
-        else if(isPutCommand(tokens) && hasTwoArgs(tokens)) {
-            currentCommand = COMMAND_PUT;
+        else if(isPutCommand(tokens)) {
+            if(hasTwoArgs(tokens)) {
+                commandMessage = OK_MSG;
+                currentCommand = COMMAND_PUT;
+            }
+            else {
+                commandMessage = ERROR_MSG_INVALID;
+                return ERROR;
+            }
         }
         else {
-            lastErrorMessage = ERROR_MSG_INVALID;
+            commandMessage = ERROR_MSG_UNKWN;
             return ERROR;
         }
 

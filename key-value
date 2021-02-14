@@ -33,7 +33,9 @@ public class Driver {
 
             String userInput = CLIConsole.readLine();
 
-            boolean successful = prompt.execute(userInput);
+            prompt.execute(userInput);
+
+            System.out.println(prompt.getCommandMessage());
         }
 
     }
