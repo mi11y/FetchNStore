@@ -111,4 +111,21 @@ public class PutCommandTest {
                 testPutCommand.getCommandMessage()
         );
     }
+
+    @Test
+    public void shouldNotUpdateAfterCreate() {
+        String[] initTokens = {"put", "key", "value"};
+        PutCommand testPutCommand = new PutCommand(new MapDataStore());
+
+        testPutCommand.handle(initTokens);
+
+        String[] testTokens = {"put", "key", "potato"};
+        testPutCommand.handle(testTokens);
+
+        Assert.assertEquals(
+                "The handle() method should set the 'Key already defined.' command message when given a put command with an existing key.",
+                "Key already defined.",
+                testPutCommand.getCommandMessage()
+        );
+    }
 }

@@ -23,20 +23,40 @@ public class MapDataStore extends AbstractDataStore {
 
     /**
      * This method will store the key-value pair in the data store. If the key already exists
-     * in the data store, it's previous value will be overwritten with the calling value.
+     * in the data store, false is returned.
      *
      * @param key The key in the "Key-Value" pair
      * @param value The value in the "Key-Value" pair
-     * @return A boolean (true) indicating that the creation or update of the key-value pair was
+     * @return A boolean (true) indicating that the creation of the key-value pair was
      * successful, false otherwise.
      */
     @Override
     protected boolean create(String key, String value) {
-        if(key == null || value == null) {
+        if(key == null || value == null || map.containsKey(key)) {
             return false;
         }
         map.put(key, value);
         return true;
+    }
+
+    /**
+     * This method will update an existing key-value pair in the data store.
+     * If the operation is successful, true is returned. Otherwise, if the operation
+     * fails, or the key does not exist, false is returned.
+     *
+     * @param key The key in the "Key-Value" pair
+     * @param value The value in the "Key-Value" pair
+     * @return A boolean (true) indicating that the update of the key value pair
+     * was successful. False is returned if an error was encountered (such as updating
+     * a key that does not exist).
+     */
+    @Override
+    protected boolean update(String key, String value) {
+        if(key != null && value != null && map.containsKey(key)) {
+            map.put(key, value);
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -103,18 +103,6 @@ public class PromptTest {
     }
 
     /**
-     * By typing in ">someCommandThatDoesntExist", the prompt should reject
-     * the input and indicate what commands are known.
-     */
-    @Test
-    public void shouldRejectUnknownCommands() {
-        Prompt testPrompt = new Prompt();
-
-        testPrompt.execute("notAcommand thing1 thing2");
-        Assert.assertEquals("Unknown command. Known commands are: put, fetch, exit", testPrompt.getCommandMessage());
-    }
-
-    /**
      * By typing in ">fetch key" after putting a key-value pair, the value
      * for this key should be returned.
      */
@@ -177,6 +165,39 @@ public class PromptTest {
         Assert.assertEquals(
                 "Fetching without a key should return invalid syntax error.",
                 "Invalid syntax.",
+                testPrompt.getCommandMessage()
+        );
+    }
+
+    /**
+     * By typing in ">update key newValue", the existing value in the data store
+     * should be updated with the new value.
+     */
+    @Test
+    public void shouldAcceptUpdateCommand() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("put key oldValue");
+        testPrompt.execute("update key newValue");
+        Assert.assertEquals(
+                "The prompt should execute the update command and update the data store when calling update with valid parameters.",
+                "ok",
+                testPrompt.getCommandMessage()
+        );
+    }
+
+    /**
+     * The prompt should return 'Unknown command. Known commands are: put, fetch, update, exit'
+     * when given an undefined command.
+     */
+    @Test
+    public void shouldReturnUnknownCommandMessage() {
+        Prompt testPrompt = new Prompt();
+
+        testPrompt.execute("potato");
+        Assert.assertEquals(
+                "The prompt should return 'Unknown command. Known commands are: put, fetch, update, exit' when given an undefined command",
+                "Unknown command. Known commands are: put, fetch, update, exit",
                 testPrompt.getCommandMessage()
         );
     }

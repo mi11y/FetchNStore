@@ -12,6 +12,7 @@ package cli;
 public class Prompt {
 
     private final PutCommand putCommand;
+    private final UpdateCommand updateCommand;
     private final ExitCommand exitCommand;
     private final FetchCommand fetchCommand;
 
@@ -47,6 +48,7 @@ public class Prompt {
     public Prompt() {
         AbstractDataStore dataStore = new MapDataStore();
         putCommand      = new PutCommand(dataStore);
+        updateCommand   = new UpdateCommand(dataStore);
         fetchCommand    = new FetchCommand(dataStore);
         exitCommand     = new ExitCommand();
         commandMessage  = "";
@@ -92,12 +94,16 @@ public class Prompt {
             putCommand.handle(tokens);
             commandMessage = putCommand.getCommandMessage();
         }
+        else if(updateCommand.isMatchingCommand(tokens)) {
+            updateCommand.handle(tokens);
+            commandMessage = updateCommand.getCommandMessage();
+        }
         else if(fetchCommand.isMatchingCommand(tokens)) {
             fetchCommand.handle(tokens);
             commandMessage = fetchCommand.getCommandMessage();
         }
         else {
-            commandMessage = "Unknown command. Known commands are: put, fetch, exit";
+            commandMessage = "Unknown command. Known commands are: put, fetch, update, exit";
         }
 
     }

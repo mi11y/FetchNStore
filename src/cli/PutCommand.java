@@ -41,6 +41,9 @@ public class PutCommand extends AbstractCommand {
         if(tokens == null || hasTwoArgs(tokens) == false) {
             commandMessage = MSG_ERROR_INVALID;
         }
+        else if(dataStore.read(getFirstArg(tokens)).isBlank() == false) {
+            commandMessage = "Key already defined.";
+        }
         else {
             dataStore.create(getFirstArg(tokens), getSecondArg(tokens));
             commandMessage = "ok";
